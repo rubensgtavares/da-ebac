@@ -2,19 +2,32 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+# Carregar dados
 dt = pd.read_csv('gasolina.csv', sep=',')
+x = dt.dia
+y = dt.venda
 
-fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+# Criar subplots
+fig, axes = plt.subplots(1, 2, figsize=(12, 6))
 
-# Primeiro gráfico: Lineplot
-sns.lineplot(data=dt, x="dia", y="venda", ax=axes[0])
-axes[0].set_title("Lineplot das vendas por dia")
+# Gráfico 1: Usando matplotlib
+axes[0].plot(x, y, linestyle="--", label="Preço")
+axes[0].fill_between(x, y, color="blue", alpha=0.2)
+axes[0].grid(True)
+axes[0].set_title('Preço da Gasolina')
+axes[0].set_xlabel('Dia')
+axes[0].set_ylabel('Preço')
+axes[0].legend()
 
-# Segundo gráfico: Barplot
-sns.barplot(data=dt,x="dia", y="venda", hue="venda", palette="pastel", ax=axes[1])
-axes[1].set_title("Barplot das vendas por dia")
+# Gráfico 2: Usando seaborn
+sns.lineplot(x=x, y=y, ax=axes[1], label="Preço")
+axes[1].grid(True)
+axes[1].set_title('Preço da Gasolina')
+axes[1].set_xlabel('Dia')
+axes[1].set_ylabel('Preço')
+axes[1].legend()
 
-
-fig.savefig("gasolina.png", dpi=300)
+# Salvar antes de mostrar
 plt.tight_layout()
+plt.savefig('gasolina.png')
 plt.show()
